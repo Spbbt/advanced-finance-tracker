@@ -363,7 +363,9 @@ const renderSummary = () => {
 
 const renderTransactions = () => {
   const filtered = filterTransactions();
-  dom.resultsCount.textContent = `${filtered.length} ${i18nData.results || 'results'}`;
+  dom.resultsCount.textContent = currentLang === 'zh' 
+  ? `共 ${filtered.length} 条结果` 
+  : `${filtered.length} results`;
 
   if (filtered.length === 0) {
     dom.transactionsList.innerHTML = `
@@ -468,7 +470,8 @@ const groupByMonth = (transactions) => {
   const lookup = new Map();
 
   sorted.forEach((tx) => {
-    const label = new Date(tx.date).toLocaleDateString("en-US", {
+   const locale = currentLang === 'zh' ? 'zh-CN' : 'en-US';
+   const label = new Date(tx.date).toLocaleDateString(locale, {
       month: "long",
       year: "numeric",
     });
