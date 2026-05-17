@@ -46,6 +46,7 @@
   "accept": "Accept",
   "type": "类型",
   "selectCategory": "Select category",
+  "datePlaceholder": "Select date...",
 "salary": "Salary",
 "business": "Business",
 "investments": "Investments",
