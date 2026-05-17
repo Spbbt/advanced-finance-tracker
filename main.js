@@ -214,25 +214,25 @@ const startEditing = (id) => {
 
 
 
-// const deleteTransaction = (id) => {
-//   state.transactions = state.transactions.filter((tx) => tx.id !== id);
-//   saveToLocalStorage();
-//   renderApp();
-//   showToast("Transaction deleted.");
-// };
+const deleteTransaction = (id) => {
+  state.transactions = state.transactions.filter((tx) => tx.id !== id);
+  saveToLocalStorage();
+  renderApp();
+  showToast("Transaction deleted.");
+};
 
 // new vesion
-const deleteTransaction = (id) => {
-  state.transactions = state.transactions.filter((t) => t.id !== id);
-  saveData();
-  renderApp();
-  if (state.editingId === id) {
-    cancelEdit(); 
-  }
-  if (typeof showToast === 'function') {
-    showToast("Transaction deleted.");
-  }
-};
+// const deleteTransaction = (id) => {
+//   state.transactions = state.transactions.filter((t) => t.id !== id);
+//   saveData();
+//   renderApp();
+//   if (state.editingId === id) {
+//     cancelEdit(); 
+//   }
+//   if (typeof showToast === 'function') {
+//     showToast("Transaction deleted.");
+//   }
+// };
 
 
 // const openConfirmModal = (id) => {
