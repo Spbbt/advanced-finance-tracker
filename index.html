@@ -261,22 +261,6 @@
       gap: 15px;
       border: 1px solid #334155;
     }
-  
-    input[type="date"]:not(:focus):not(:valid)::-webkit-datetime-edit {
-      color: transparent !important;
-    }
-
-    input[type="date"]:not(:focus):not(:valid)::before {
-      content: attr(placeholder);
-      color: #94a3b8;
-      position: absolute;
-      left: 12px;     
-    }
-
-    input[type="date"]:focus::-webkit-datetime-edit,
-    input[type="date"]:valid::-webkit-datetime-edit {
-      color: var(--text-main, inherit);
-    }
   </style>
 
     <script src="main.js"></script>
