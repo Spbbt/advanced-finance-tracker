@@ -124,7 +124,7 @@
 
             <label class="form__field">
               <span i18n="date">Date</span>
-              <input id="dateInput" type="date" required />
+              <input id="dateInput" type="date" i18n-placeholder="datePlaceholder" required />
               <small class="error" id="dateError"></small>
             </label>
 
@@ -242,7 +242,7 @@
     <button id="acceptCookies" class="btn btn--accent" i18n="accept">Accept</button>
   </div>
 
-  <style>
+<style>
     .cookie-banner {
       position: fixed;
       bottom: 20px;
@@ -260,6 +260,22 @@
       flex-direction: column;
       gap: 15px;
       border: 1px solid #334155;
+    }
+  
+    input[type="date"]:not(:focus):not(:valid)::-webkit-datetime-edit {
+      color: transparent !important;
+    }
+
+    input[type="date"]:not(:focus):not(:valid)::before {
+      content: attr(placeholder);
+      color: #94a3b8;
+      position: absolute;
+      left: 12px;     
+    }
+
+    input[type="date"]:focus::-webkit-datetime-edit,
+    input[type="date"]:valid::-webkit-datetime-edit {
+      color: var(--text-main, inherit);
     }
   </style>
 
