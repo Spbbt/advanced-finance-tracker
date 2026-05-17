@@ -212,12 +212,28 @@ const startEditing = (id) => {
   showToast("Editing mode enabled.");
 };
 
+
+
+// const deleteTransaction = (id) => {
+//   state.transactions = state.transactions.filter((tx) => tx.id !== id);
+//   saveToLocalStorage();
+//   renderApp();
+//   showToast("Transaction deleted.");
+// };
+
+// new vesion
 const deleteTransaction = (id) => {
-  state.transactions = state.transactions.filter((tx) => tx.id !== id);
-  saveToLocalStorage();
+  if (state.editingId === id) {
+    cancelEdit(); 
+  }
+  state.transactions = state.transactions.filter((t) => t.id !== id);
+  saveData();
   renderApp();
-  showToast("Transaction deleted.");
+  if (typeof showToast === 'function') {
+    showToast("Transaction deleted.");
+  }
 };
+
 
 // const openConfirmModal = (id) => {
 //   state.pendingDeleteId = id;
