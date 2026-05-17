@@ -421,9 +421,15 @@ const renderTransactions = () => {
 const renderTransactionItem = (tx) => {
   const typeClass = tx.amount >= 0 ? "amount--income" : "amount--expense";
   const formattedAmount = formatCurrency(tx.amount);
-  const formattedDate = formatDate(tx.date);
+  
+  const locale = currentLang === 'en' ? 'en-US' : 'zh-CN';
+  const formattedDate = new Date(tx.date).toLocaleDateString(locale, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 
- // Core Fix: Escapes the user-provided title to neutralize its script execution capabilities.
+  const translatedCategory = i18nData[tx.category.toLowerCase()] || tx.category;
   const safeTitle = escapeHTML(tx.title);
 
   return `
@@ -431,7 +437,7 @@ const renderTransactionItem = (tx) => {
       <div>
         <p class="transaction__title">${safeTitle}</p> 
         <div class="transaction__meta">
-          <span class="badge">${tx.category}</span>
+          <span class="badge">${translatedCategory}</span>
           <span>${formattedDate}</span>
         </div>
       </div>
@@ -470,8 +476,8 @@ const groupByMonth = (transactions) => {
   const lookup = new Map();
 
   sorted.forEach((tx) => {
-   const locale = currentLang === 'zh' ? 'zh-CN' : 'en-US';
-   const label = new Date(tx.date).toLocaleDateString(locale, {
+    const locale = currentLang === 'en' ? 'en-US' : 'zh-CN';
+    const label = new Date(tx.date).toLocaleDateString(locale, {
       month: "long",
       year: "numeric",
     });
