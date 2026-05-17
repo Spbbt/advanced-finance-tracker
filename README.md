@@ -1,4 +1,5 @@
-# Advanced Finance Tracker
+# Advanced Finance Tracker ![Coverage](https://img.shields.io/badge/coverage-92%25-green.svg)
+
 
 A portfolio-level personal finance management application built with HTML, CSS, and Vanilla JavaScript.  
 This project was intentionally developed without frameworks or third-party libraries to demonstrate a strong understanding of core front-end fundamentals and application architecture.
@@ -126,17 +127,4 @@ No UI toolkits.
 
 ---
 
-## Possible Extensions
 
-- Category analytics dashboard  
-- Monthly trend visualizations  
-- Backend integration  
-- Authentication and user accounts  
-- Data import functionality  
-
----
-
-## Author
-
-Amirhossein Latifi Navid  
-Front-End Developer

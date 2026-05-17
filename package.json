@@ -10,8 +10,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@vitest/coverage-v8": "^1.6.0",
+    "@vitest/coverage-v8": "^1.6.1",
     "happy-dom": "^20.9.0",
-    "vitest": "^1.6.0"
+    "vitest": "^1.6.1"
   }
 }
