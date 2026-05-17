@@ -632,8 +632,12 @@ async function loadLanguage(lang) {
     i18nData = await res.json();
     currentLang = lang;
     localStorage.setItem('siteLang', lang);
+    
+    document.documentElement.lang = lang; 
+
     applyI18n();
-    renderApp(); 
+    resetFormState();
+    renderApp();
   } catch (err) {
     console.error('语言文件加载失败', err);
   }
@@ -776,8 +780,9 @@ window.addEventListener('DOMContentLoaded', () => {
   const langSwitch = document.getElementById('langSwitch');
   if(langSwitch){
     langSwitch.value = currentLang;
-    langSwitch.addEventListener('change',e=>{
-      loadLanguage(e.target.value);
+    langSwitch.addEventListener('change', e => {
+      currentLang = e.target.value; 
+      loadLanguage(currentLang);
     });
   }
 });
