@@ -225,14 +225,12 @@ const deleteTransaction = (id) => {
   saveToLocalStorage();
   renderApp();
   showToast("Transaction deleted.");
-
   if (state.editingId && state.editingId === id) {
     setTimeout(() => {
-      cancelEdit();
-    }, 50); 
+      resetFormState(); 
+    }, 10);
   }
 };
-
 
 // const openConfirmModal = (id) => {
 //   state.pendingDeleteId = id;
