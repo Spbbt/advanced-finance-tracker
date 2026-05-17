@@ -297,15 +297,41 @@ const renderTransactions = () => {
     .join("");
 };
 
+// const renderTransactionItem = (tx) => {
+//   const typeClass = tx.amount >= 0 ? "amount--income" : "amount--expense";
+//   const formattedAmount = formatCurrency(tx.amount);
+//   const formattedDate = formatDate(tx.date);
+
+//   return `
+//     <div class="transaction">
+//       <div>
+//         <p class="transaction__title">${tx.title}</p>
+//         <div class="transaction__meta">
+//           <span class="badge">${tx.category}</span>
+//           <span>${formattedDate}</span>
+//         </div>
+//       </div>
+//       <div>
+//         <p class="amount ${typeClass}">${formattedAmount}</p>
+//         <button class="edit-btn" data-id="${tx.id}">Edit</button>
+//         <button class="delete-btn" data-id="${tx.id}">Delete</button>
+//       </div>
+//     </div>
+//   `;
+// };
+
 const renderTransactionItem = (tx) => {
   const typeClass = tx.amount >= 0 ? "amount--income" : "amount--expense";
   const formattedAmount = formatCurrency(tx.amount);
   const formattedDate = formatDate(tx.date);
 
+ // Core Fix: Escapes the user-provided title to neutralize its script execution capabilities.
+  const safeTitle = escapeHTML(tx.title);
+
   return `
     <div class="transaction">
       <div>
-        <p class="transaction__title">${tx.title}</p>
+        <p class="transaction__title">${safeTitle}</p> 
         <div class="transaction__meta">
           <span class="badge">${tx.category}</span>
           <span>${formattedDate}</span>
