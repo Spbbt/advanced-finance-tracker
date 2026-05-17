@@ -640,6 +640,13 @@ function applyI18n() {
       el.innerText = i18nData[key];
     }
   });
+
+  document.querySelectorAll('[i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('i18n-placeholder');
+    if (i18nData[key]) {
+      el.setAttribute('placeholder', i18nData[key]);
+    }
+  });
 }
 
 const initializeApp = () => {
