@@ -647,7 +647,7 @@ function applyI18n() {
   document.querySelectorAll('[i18n]').forEach(el => {
     const key = el.getAttribute('i18n');
     if (i18nData[key]) {
-      el.innerText = i18nData[key];
+      el.textContent = i18nData[key]; 
     }
   });
 
