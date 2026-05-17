@@ -776,8 +776,9 @@ window.addEventListener('DOMContentLoaded', () => {
   const langSwitch = document.getElementById('langSwitch');
   if(langSwitch){
     langSwitch.value = currentLang;
-    langSwitch.addEventListener('change',e=>{
-      loadLanguage(e.target.value);
+    langSwitch.addEventListener('change', e => {
+      currentLang = e.target.value; 
+      loadLanguage(currentLang);
     });
   }
 });
