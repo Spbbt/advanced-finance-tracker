@@ -11,6 +11,8 @@ const escapeHTML = (str) => {
     .replace(/'/g, "&#039;");
 };
 
+let i18nData = {};
+let currentLang = localStorage.getItem('siteLang') || 'zh';
 
 // Added: Records the element that was focused prior to opening a modal, to restore focus upon closing.
 let previouslyFocusedElement = null;
@@ -82,7 +84,7 @@ const setTheme = (theme) => {
   state.theme = theme;
   document.body.classList.toggle("theme-light", theme === "light");
   dom.themeToggleBtn.textContent =
-    theme === "light" ? "Dark Mode" : "Light Mode";
+    theme === "light" ? (i18nData.darkMode || "Dark Mode") : (i18nData.lightMode || "Light Mode");
   saveTheme();
   // new add
   renderApp(); 
@@ -157,14 +159,14 @@ const validateForm = () => {
 const resetFormState = () => {
   dom.form.reset();
   state.editingId = null;
-  dom.submitBtn.textContent = "Add Transaction";
+  dom.submitBtn.textContent = i18nData.addTransaction || "Add Transaction";
   dom.cancelEditBtn.hidden = true;
   clearErrors();
 };
 
 const addTransaction = () => {
   if (!validateForm()) {
-    showToast("Please fix the highlighted fields.", "error");
+    showToast(i18nData.fixErrors || "Please fix the highlighted fields.", "error");
     return;
   }
 
@@ -177,7 +179,7 @@ const addTransaction = () => {
     state.transactions = state.transactions.map((tx) =>
       tx.id === state.editingId ? { ...tx, title, amount, category, date } : tx,
     );
-    showToast("Transaction updated.");
+    showToast(i18nData.transactionUpdated || "Transaction updated.");
   } else {
     const newTransaction = {
       id: generateID(),
@@ -188,7 +190,7 @@ const addTransaction = () => {
     };
 
     state.transactions = [newTransaction, ...state.transactions];
-    showToast("Transaction added.");
+    showToast(i18nData.transactionAdded || "Transaction added.");
   }
 
   resetFormState();
@@ -206,10 +208,10 @@ const startEditing = (id) => {
   dom.dateInput.value = transaction.date;
 
   state.editingId = id;
-  dom.submitBtn.textContent = "Save Changes";
+  dom.submitBtn.textContent = i18nData.saveChanges || "Save Changes";
   dom.cancelEditBtn.hidden = false;
   dom.titleInput.focus();
-  showToast("Editing mode enabled.");
+  showToast(i18nData.editingMode || "Editing mode enabled.");
 };
 
 // const deleteTransaction = (id) => {
@@ -224,7 +226,7 @@ const deleteTransaction = (id) => {
   state.transactions = state.transactions.filter((tx) => tx.id !== id);
   saveToLocalStorage();
   renderApp();
-  showToast("Transaction deleted.");
+  showToast(i18nData.transactionDeleted || "Transaction deleted.");
   if (state.editingId && state.editingId === id) {
     setTimeout(() => {
       resetFormState(); 
@@ -338,8 +340,8 @@ const renderTransactions = () => {
     dom.transactionsList.innerHTML = `
       <div class="transactions__empty">
         <div class="empty__icon">+</div>
-        <p>No transactions yet. Add your first one to get started.</p>
-        <button class="btn btn--accent empty-add-btn" type="button">Add First Transaction</button>
+        <p i18n="noTransactions">No transactions yet. Add your first one to get started.</p>
+        <button class="btn btn--accent empty-add-btn" type="button" i18n="addFirstTransaction">Add First Transaction</button>
       </div>
     `;
     return;
@@ -401,8 +403,8 @@ const renderTransactionItem = (tx) => {
       </div>
       <div>
         <p class="amount ${typeClass}">${formattedAmount}</p>
-        <button class="edit-btn" data-id="${tx.id}">Edit</button>
-        <button class="delete-btn" data-id="${tx.id}">Delete</button>
+        <button class="edit-btn" data-id="${tx.id}">${i18nData.edit || "Edit"}</button>
+        <button class="delete-btn" data-id="${tx.id}">${i18nData.delete || "Delete"}</button>
       </div>
     </div>
   `;
@@ -519,8 +521,8 @@ const renderChart = () => {
   // ctx.fillStyle = "#f8f4e9";  new_version 
   ctx.fillStyle = state.theme === "light" ? "#1e293b" : "#f8f4e9";
   ctx.font = "14px sans-serif";
-  ctx.fillText("Income", 170, baseY + 20);
-  ctx.fillText("Expense", 160 + barWidth + gap, baseY + 20);
+  ctx.fillText(i18nData.incomeType || "Income", 170, baseY + 20);
+  ctx.fillText(i18nData.expenseType || "Expense", 160 + barWidth + gap, baseY + 20);
 
   ctx.fillText(formatCurrency(income), 150, baseY - incomeHeight - 10);
   ctx.fillText(
@@ -538,7 +540,7 @@ const renderApp = () => {
 
 const exportToCSV = () => {
   if (state.transactions.length === 0) {
-    showToast("No data to export.", "error");
+    showToast(i18nData.noDataExport || "No data to export.", "error");
     return;
   }
 
@@ -567,8 +569,29 @@ const exportToCSV = () => {
   link.remove();
   URL.revokeObjectURL(url);
 
-  showToast("CSV exported.");
+  showToast(i18nData.csvExported || "CSV exported.");
 };
+
+async function loadLanguage(lang) {
+  try {
+    const res = await fetch(`locales/${lang}.json`);
+    i18nData = await res.json();
+    currentLang = lang;
+    localStorage.setItem('siteLang', lang);
+    applyI18n();
+  } catch (err) {
+    console.error('语言文件加载失败', err);
+  }
+}
+
+function applyI18n() {
+  document.querySelectorAll('[i18n]').forEach(el => {
+    const key = el.getAttribute('i18n');
+    if (i18nData[key]) {
+      el.innerText = i18nData[key];
+    }
+  });
+}
 
 const initializeApp = () => {
   loadFromLocalStorage();
@@ -640,7 +663,7 @@ const initializeApp = () => {
     dom.searchInput.value = "";
     renderTransactions();
     if (typeof showToast === 'function') {
-      showToast("Filters cleared.");
+      showToast(i18nData.filtersCleared || "Filters cleared.");
     }
   });
   // ......
@@ -679,12 +702,23 @@ const initCookieBanner = () => {
     localStorage.setItem("cookiesAccepted", "true");
     banner.style.display = "none";
     if (typeof showToast === 'function') {
-      showToast("Privacy preferences saved.");
+      showToast(i18nData.privacySaved || "Privacy preferences saved.");
     }
   });
 };
 
-window.addEventListener('DOMContentLoaded', initCookieBanner);
+window.addEventListener('DOMContentLoaded', () => {
+  initCookieBanner();
+  loadLanguage(currentLang);
+  
+  const langSwitch = document.getElementById('langSwitch');
+  if(langSwitch){
+    langSwitch.value = currentLang;
+    langSwitch.addEventListener('change',e=>{
+      loadLanguage(e.target.value);
+    });
+  }
+});
 
 
 initializeApp();

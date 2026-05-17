@@ -17,38 +17,42 @@
     <div class="app">
       <header class="app__header">
         <div>
-          <p class="app__eyebrow">Personal Finance</p>
-          <h1 class="app__title">Advanced Finance Tracker</h1>
-          <p class="app__subtitle">
+          <p class="app__eyebrow" i18n="personalFinance">Personal Finance</p>
+          <h1 class="app__title" i18n="advancedFinanceTracker">Advanced Finance Tracker</h1>
+          <p class="app__subtitle" i18n="trackDescription">
             Track income, expenses, and your balance with clarity.
           </p>
         </div>
         <div class="app__actions">
-          <button class="btn btn--ghost" id="themeToggleBtn" type="button">
-            Light Mode
-          </button>
-          <button class="btn btn--accent" id="exportCsvBtn" type="button">
-            Export CSV
-          </button>
-          <button class="btn btn--ghost" id="resetFiltersBtn" type="button">
-            Reset Filters
-          </button>
-        </div>
+  <select id="langSwitch" class="btn btn--ghost">
+    <option value="zh">中文</option>
+    <option value="en">English</option>
+  </select>
+  <button class="btn btn--ghost" id="themeToggleBtn" type="button" i18n="lightMode">
+    Light Mode
+  </button>
+  <button class="btn btn--accent" id="exportCsvBtn" type="button" i18n="exportCSV">
+    Export CSV
+  </button>
+  <button class="btn btn--ghost" id="resetFiltersBtn" type="button" i18n="resetFilters">
+    Reset Filters
+  </button>
+</div>
       </header>
 
       <section class="summary">
         <div class="card summary__card">
-          <p class="summary__label">Total Balance</p>
+          <p class="summary__label" i18n="totalBalance">Total Balance</p>
           <h2 class="summary__value" id="totalBalance">$0.00</h2>
         </div>
         <div class="card summary__card">
-          <p class="summary__label">Total Income</p>
+          <p class="summary__label" i18n="totalIncome">Total Income</p>
           <h2 class="summary__value summary__value--income" id="totalIncome">
             $0.00
           </h2>
         </div>
         <div class="card summary__card">
-          <p class="summary__label">Total Expenses</p>
+          <p class="summary__label" i18n="totalExpenses">Total Expenses</p>
           <h2 class="summary__value summary__value--expense" id="totalExpenses">
             $0.00
           </h2>
@@ -57,18 +61,18 @@
 
       <section class="card chart">
         <div class="transactions__header">
-          <h3 class="section-title">Cash Flow Overview</h3>
-          <p class="transactions__meta">Income vs Expense</p>
+          <h3 class="section-title" i18n="cashFlowOverview">Cash Flow Overview</h3>
+          <p class="transactions__meta" i18n="incomeVsExpense">Income vs Expense</p>
         </div>
         <canvas id="financeChart" width="800" height="260"></canvas>
       </section>
 
       <section class="grid">
         <div class="card form">
-          <h3 class="section-title">Add Transaction</h3>
+          <h3 class="section-title" i18n="addTransaction">Add Transaction</h3>
           <form id="transactionForm" class="form__grid" autocomplete="off">
             <label class="form__field">
-              <span>Title</span>
+              <span i18n="title">Title</span>
               <input
                 id="titleInput"
                 type="text"
@@ -79,7 +83,7 @@
             </label>
 
             <label class="form__field">
-              <span>Amount</span>
+              <span i18n="amount">Amount</span>
               <!-- prev version <input
                 id="amountInput"
                 type="number"
@@ -92,31 +96,47 @@
             </label>
 
             <label class="form__field">
-              <span>Category</span>
-              <select id="categoryInput" required>
-                <option value="" disabled selected>Select category</option>
-                <option>Salary</option>
-                <option>Business</option>
-                <option>Investments</option>
-                <option>Housing</option>
-                <option>Food</option>
-                <option>Transport</option>
-                <option>Health</option>
-                <option>Entertainment</option>
-                <option>Education</option>
-                <option>Other</option>
-              </select>
+              <span i18n="category">Category</span>
+              <!-- 添加交易的分类下拉 -->
+<select id="categoryInput" required>
+  <option value="" disabled selected i18n="selectCategory">Select category</option>
+  <option i18n="salary">Salary</option>
+  <option i18n="business">Business</option>
+  <option i18n="investments">Investments</option>
+  <option i18n="housing">Housing</option>
+  <option i18n="food">Food</option>
+  <option i18n="transport">Transport</option>
+  <option i18n="health">Health</option>
+  <option i18n="entertainment">Entertainment</option>
+  <option i18n="education">Education</option>
+  <option i18n="other">Other</option>
+</select>
+
+
+<select id="filterCategory">
+  <option value="all" i18n="allCategories">All categories</option>
+  <option i18n="salary">Salary</option>
+  <option i18n="business">Business</option>
+  <option i18n="investments">Investments</option>
+  <option i18n="housing">Housing</option>
+  <option i18n="food">Food</option>
+  <option i18n="transport">Transport</option>
+  <option i18n="health">Health</option>
+  <option i18n="entertainment">Entertainment</option>
+  <option i18n="education">Education</option>
+  <option i18n="other">Other</option>
+</select>
               <small class="error" id="categoryError"></small>
             </label>
 
             <label class="form__field">
-              <span>Date</span>
+              <span i18n="date">Date</span>
               <input id="dateInput" type="date" required />
               <small class="error" id="dateError"></small>
             </label>
 
             <div class="form__actions">
-              <button class="btn btn--primary" type="submit" id="submitBtn">
+              <button class="btn btn--primary" type="submit" id="submitBtn" i18n="addTransaction">
                 Add Transaction
               </button>
               <button
@@ -124,6 +144,7 @@
                 type="button"
                 id="cancelEditBtn"
                 hidden
+                i18n="cancelEdit"
               >
                 Cancel Edit
               </button>
@@ -132,36 +153,36 @@
         </div>
 
         <div class="card filters">
-          <h3 class="section-title">Filters & Search</h3>
+          <h3 class="section-title" i18n="filtersSearch">Filters & Search</h3>
           <div class="filters__grid">
             <label class="form__field">
-              <span>Category</span>
+              <span i18n="category">Category</span>
               <select id="filterCategory">
-                <option value="all">All categories</option>
-                <option>Salary</option>
-                <option>Business</option>
-                <option>Investments</option>
-                <option>Housing</option>
-                <option>Food</option>
-                <option>Transport</option>
-                <option>Health</option>
-                <option>Entertainment</option>
-                <option>Education</option>
-                <option>Other</option>
-              </select>
+  <option value="all" i18n="allCategories">All categories</option>
+  <option i18n="salary">Salary</option>
+  <option i18n="business">Business</option>
+  <option i18n="investments">Investments</option>
+  <option i18n="housing">Housing</option>
+  <option i18n="food">Food</option>
+  <option i18n="transport">Transport</option>
+  <option i18n="health">Health</option>
+  <option i18n="entertainment">Entertainment</option>
+  <option i18n="education">Education</option>
+  <option i18n="other">Other</option>
+</select>
             </label>
 
             <label class="form__field">
-              <span>Type</span>
+              <span i18n="type">Type</span>
               <select id="filterType">
-                <option value="all">All</option>
-                <option value="income">Income</option>
-                <option value="expense">Expense</option>
+                <option value="all" i18n="allTypes">All</option>
+                <option value="income" i18n="incomeType">Income</option>
+                <option value="expense" i18n="expenseType">Expense</option>
               </select>
             </label>
 
             <label class="form__field form__field--full">
-              <span>Search by title</span>
+              <span i18n="searchByTitle">Search by title</span>
               <input
                 id="searchInput"
                 type="text"
@@ -174,15 +195,15 @@
 
       <section class="card transactions">
         <div class="transactions__header">
-          <h3 class="section-title">Transactions</h3>
+          <h3 class="section-title" i18n="transactions">Transactions</h3>
           <p class="transactions__meta" id="resultsCount">0 results</p>
         </div>
 
         <div class="transactions__list" id="transactionsList">
           <div class="transactions__empty">
             <div class="empty__icon">+</div>
-            <p>No transactions yet. Add your first one to get started.</p>
-            <button class="btn btn--accent empty-add-btn" type="button">
+            <p i18n="noTransactions">No transactions yet. Add your first one to get started.</p>
+            <button class="btn btn--accent empty-add-btn" type="button" i18n="addFirstTransaction">
               Add First Transaction
             </button>
           </div>
@@ -198,13 +219,13 @@
         aria-modal="true"
         aria-labelledby="confirmTitle"
       >
-        <h3 class="section-title" id="confirmTitle">Delete transaction?</h3>
-        <p class="modal__text">This action cannot be undone.</p>
+        <h3 class="section-title" id="confirmTitle" i18n="deleteTransaction">Delete transaction?</h3>
+        <p class="modal__text" i18n="deleteConfirm">This action cannot be undone.</p>
         <div class="modal__actions">
-          <button class="btn btn--ghost" id="cancelDeleteBtn" type="button">
+          <button class="btn btn--ghost" id="cancelDeleteBtn" type="button" i18n="cancel">
             Cancel
           </button>
-          <button class="btn btn--danger" id="confirmDeleteBtn" type="button">
+          <button class="btn btn--danger" id="confirmDeleteBtn" type="button" i18n="delete">
             Delete
           </button>
         </div>
@@ -214,21 +235,13 @@
     <div class="toast-container" id="toastContainer"></div>
 
 
-    <!-- <div id="cookieBanner" class="cookie-banner" style="display: none;"> -->
-    <!-- <p>We use cookies to ensure you get the best experience on our finance tracker. 
+    <div id="cookieBanner" class="cookie-banner" style="display: none;">
+    <p i18n="cookieText">We use cookies to ensure you get the best experience on our finance tracker. 
        By clicking "Accept", you agree to our 
        <a href="#" style="color: #60a5fa; text-decoration: underline;">Privacy Policy</a>.
     </p>
-    <button id="acceptCookies" class="btn btn--accent">Accept</button>
-  </div> -->
-
-  <div id="cookieBanner" class="cookie-banner" style="display: none;">
-  <p>We use cookies to ensure you get the best experience on our finance tracker. 
-     By clicking "Accept", you agree to our 
-     <a href="privacy.html" target="_blank" style="color: #60a5fa; text-decoration: underline;">Privacy Policy</a>.
-  </p>
-  <button id="acceptCookies" class="btn btn--accent">Accept</button>
-</div>
+    <button id="acceptCookies" class="btn btn--accent" i18n="accept">Accept</button>
+  </div>
 
   <style>
     .cookie-banner {
