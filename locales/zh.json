@@ -30,6 +30,7 @@
   "deleteTransaction": "删除交易？",
   "deleteConfirm": "此操作无法撤销",
   "cancel": "取消",
+  "edit": "编辑",
   "delete": "删除",
   "transactionAdded": "交易已添加",
   "transactionUpdated": "交易已更新",

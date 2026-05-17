@@ -572,6 +572,19 @@ const exportToCSV = () => {
   showToast(i18nData.csvExported || "CSV exported.");
 };
 
+// async function loadLanguage(lang) {
+//   try {
+//     const res = await fetch(`locales/${lang}.json`);
+//     i18nData = await res.json();
+//     currentLang = lang;
+//     localStorage.setItem('siteLang', lang);
+//     applyI18n();
+//   } catch (err) {
+//     console.error('语言文件加载失败', err);
+//   }
+// }
+
+// new version
 async function loadLanguage(lang) {
   try {
     const res = await fetch(`locales/${lang}.json`);
@@ -579,6 +592,7 @@ async function loadLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('siteLang', lang);
     applyI18n();
+    renderApp(); 
   } catch (err) {
     console.error('语言文件加载失败', err);
   }
@@ -722,3 +736,39 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 initializeApp();
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { 
+    escapeHTML, 
+    formatCurrency,
+    generateID,
+    saveToLocalStorage,
+    loadFromLocalStorage,
+    saveTheme,
+    setTheme,
+    loadTheme,
+    showToast,
+    clearErrors,
+    setError,
+    validateForm,
+    resetFormState,
+    addTransaction,
+    startEditing,
+    deleteTransaction,
+    openConfirmModal,
+    closeConfirmModal,
+    renderSummary,
+    renderTransactions,
+    renderTransactionItem,
+    filterTransactions,
+    groupByMonth,
+    formatDate,
+    renderChart,
+    renderApp,
+    exportToCSV,
+    loadLanguage,
+    applyI18n,
+    initializeApp,
+    initCookieBanner
+  };
+}
