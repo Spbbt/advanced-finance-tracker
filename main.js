@@ -11,6 +11,10 @@ const escapeHTML = (str) => {
     .replace(/'/g, "&#039;");
 };
 
+
+// Added: Records the element that was focused prior to opening a modal, to restore focus upon closing.
+let previouslyFocusedElement = null;
+
 const STORAGE_KEY = "financeTrackerData";
 const THEME_KEY = "financeTrackerTheme";
 
@@ -215,17 +219,41 @@ const deleteTransaction = (id) => {
   showToast("Transaction deleted.");
 };
 
+// const openConfirmModal = (id) => {
+//   state.pendingDeleteId = id;
+//   dom.confirmModal.classList.add("is-open");
+//   dom.confirmModal.setAttribute("aria-hidden", "false");
+// };
+
+// const closeConfirmModal = () => {
+//   state.pendingDeleteId = null;
+//   dom.confirmModal.classList.remove("is-open");
+//   dom.confirmModal.setAttribute("aria-hidden", "true");
+// };
+
+// new version
 const openConfirmModal = (id) => {
   state.pendingDeleteId = id;
+  previouslyFocusedElement = document.activeElement;
+
   dom.confirmModal.classList.add("is-open");
   dom.confirmModal.setAttribute("aria-hidden", "false");
+  setTimeout(() => {
+    dom.cancelDeleteBtn.focus();
+  }, 50);
+  dom.confirmModal.addEventListener("keydown", handleModalTab);
 };
 
 const closeConfirmModal = () => {
   state.pendingDeleteId = null;
   dom.confirmModal.classList.remove("is-open");
   dom.confirmModal.setAttribute("aria-hidden", "true");
+  dom.confirmModal.removeEventListener("keydown", handleModalTab);
+  if (previouslyFocusedElement && typeof previouslyFocusedElement.focus === "function") {
+    previouslyFocusedElement.focus();
+  }
 };
+
 
 // prev version
 // const renderSummary = () => {
