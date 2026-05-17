@@ -331,17 +331,48 @@ const renderSummary = () => {
   dom.totalBalance.textContent = formatCurrency(balanceCents / 100);
 };
 
+// const renderTransactions = () => {
+//   const filtered = filterTransactions();
+
+//   dom.resultsCount.textContent = `${filtered.length} results`;
+
+//   if (filtered.length === 0) {
+//     dom.transactionsList.innerHTML = `
+//       <div class="transactions__empty">
+//         <div class="empty__icon">+</div>
+//         <p i18n="noTransactions">No transactions yet. Add your first one to get started.</p>
+//         <button class="btn btn--accent empty-add-btn" type="button" i18n="addFirstTransaction">Add First Transaction</button>
+//       </div>
+//     `;
+//     return;
+//   }
+
+//   const groups = groupByMonth(filtered);
+
+//   dom.transactionsList.innerHTML = groups
+//     .map(
+//       (group) => `
+//         <div class="month-group">
+//           <p class="month-title">${group.label}</p>
+//           ${group.items.map(renderTransactionItem).join("")}
+//         </div>
+//       `,
+//     )
+//     .join("");
+// };
+
 const renderTransactions = () => {
   const filtered = filterTransactions();
-
-  dom.resultsCount.textContent = `${filtered.length} results`;
+  dom.resultsCount.textContent = `${filtered.length} ${i18nData.results || 'results'}`;
 
   if (filtered.length === 0) {
     dom.transactionsList.innerHTML = `
       <div class="transactions__empty">
         <div class="empty__icon">+</div>
-        <p i18n="noTransactions">No transactions yet. Add your first one to get started.</p>
-        <button class="btn btn--accent empty-add-btn" type="button" i18n="addFirstTransaction">Add First Transaction</button>
+        <p i18n="noTransactions">${i18nData.noTransactions || "No transactions yet. Add your first one to get started."}</p>
+        <button class="btn btn--accent empty-add-btn" type="button" i18n="addFirstTransaction">
+          ${i18nData.addFirstTransaction || "Add First Transaction"}
+        </button>
       </div>
     `;
     return;
@@ -360,6 +391,7 @@ const renderTransactions = () => {
     )
     .join("");
 };
+
 
 // const renderTransactionItem = (tx) => {
 //   const typeClass = tx.amount >= 0 ? "amount--income" : "amount--expense";
