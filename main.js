@@ -254,6 +254,27 @@ const closeConfirmModal = () => {
   }
 };
 
+// Focus Trap
+const handleModalTab = (e) => {
+  if (e.key !== "Tab") return;
+
+  const focusableElements = [dom.cancelDeleteBtn, dom.confirmDeleteBtn];
+  const firstElement = focusableElements[0];
+  const lastElement = focusableElements[focusableElements.length - 1];
+
+  if (e.shiftKey) {
+    if (document.activeElement === firstElement) {
+      lastElement.focus();
+      e.preventDefault(); 
+    }
+  } 
+  else {
+    if (document.activeElement === lastElement) {
+      firstElement.focus();
+      e.preventDefault();
+    }
+  }
+};
 
 // prev version
 // const renderSummary = () => {
