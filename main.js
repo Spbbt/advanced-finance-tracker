@@ -647,7 +647,7 @@ function applyI18n() {
   document.querySelectorAll('[i18n]').forEach(el => {
     const key = el.getAttribute('i18n');
     if (i18nData[key]) {
-      el.textContent = i18nData[key]; 
+      el.innerText = i18nData[key];
     }
   });
 
@@ -773,22 +773,22 @@ const initCookieBanner = () => {
   });
 };
 
-window.addEventListener('DOMContentLoaded', async () => {
+window.addEventListener('DOMContentLoaded', () => {
   initCookieBanner();
+  loadLanguage(currentLang);
   
   const langSwitch = document.getElementById('langSwitch');
-  if (langSwitch) {
+  if(langSwitch){
     langSwitch.value = currentLang;
-    langSwitch.addEventListener('change', async (e) => {
-      currentLang = e.target.value;
-      await loadLanguage(currentLang);
+    langSwitch.addEventListener('change', e => {
+      currentLang = e.target.value; 
+      loadLanguage(currentLang);
     });
   }
-
-  await loadLanguage(currentLang);
-
-  initializeApp();
 });
+
+
+initializeApp();
 
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { 
@@ -815,6 +815,7 @@ if (typeof module !== 'undefined' && module.exports) {
     renderTransactionItem,
     filterTransactions,
     groupByMonth,
+    formatDate,
     renderChart,
     renderApp,
     exportToCSV,
