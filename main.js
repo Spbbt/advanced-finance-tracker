@@ -773,22 +773,22 @@ const initCookieBanner = () => {
   });
 };
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
   initCookieBanner();
-  loadLanguage(currentLang);
   
   const langSwitch = document.getElementById('langSwitch');
-  if(langSwitch){
+  if (langSwitch) {
     langSwitch.value = currentLang;
-    langSwitch.addEventListener('change', e => {
-      currentLang = e.target.value; 
-      loadLanguage(currentLang);
+    langSwitch.addEventListener('change', async (e) => {
+      currentLang = e.target.value;
+      await loadLanguage(currentLang);
     });
   }
+
+  await loadLanguage(currentLang);
+
+  initializeApp();
 });
-
-
-initializeApp();
 
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { 
@@ -815,7 +815,6 @@ if (typeof module !== 'undefined' && module.exports) {
     renderTransactionItem,
     filterTransactions,
     groupByMonth,
-    formatDate,
     renderChart,
     renderApp,
     exportToCSV,
