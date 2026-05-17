@@ -223,12 +223,12 @@ const startEditing = (id) => {
 
 // new vesion
 const deleteTransaction = (id) => {
-  if (state.editingId === id) {
-    cancelEdit(); 
-  }
   state.transactions = state.transactions.filter((t) => t.id !== id);
   saveData();
   renderApp();
+  if (state.editingId === id) {
+    cancelEdit(); 
+  }
   if (typeof showToast === 'function') {
     showToast("Transaction deleted.");
   }
