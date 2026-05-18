@@ -11,10 +11,9 @@ const escapeHTML = (str) => {
     .replace(/'/g, "&#039;");
 };
 
+// modify i18n
 let i18nData = {};
 let currentLang = localStorage.getItem('siteLang') || 'zh';
-
-// Added: Records the element that was focused prior to opening a modal, to restore focus upon closing.
 let previouslyFocusedElement = null;
 
 const STORAGE_KEY = "financeTrackerData";
@@ -86,7 +85,6 @@ const setTheme = (theme) => {
   dom.themeToggleBtn.textContent =
     theme === "light" ? (i18nData.darkMode || "Dark Mode") : (i18nData.lightMode || "Light Mode");
   saveTheme();
-  // new add
   renderApp(); 
 };
 
@@ -214,13 +212,6 @@ const startEditing = (id) => {
   showToast(i18nData.editingMode || "Editing mode enabled.");
 };
 
-// const deleteTransaction = (id) => {
-//   state.transactions = state.transactions.filter((tx) => tx.id !== id);
-//   saveToLocalStorage();
-//   renderApp();
-//   showToast("Transaction deleted.");
-// };
-
 // new vesion
 const deleteTransaction = (id) => {
   state.transactions = state.transactions.filter((tx) => tx.id !== id);
@@ -233,7 +224,6 @@ const deleteTransaction = (id) => {
     }, 10);
   }
 };
-
 
 
 const openConfirmModal = (id) => {
@@ -324,6 +314,7 @@ const renderSummary = () => {
 //     .join("");
 // };
 
+// modify with i18n
 const renderTransactions = () => {
   const filtered = filterTransactions();
   dom.resultsCount.textContent = currentLang === 'zh' 
@@ -392,9 +383,8 @@ const renderTransactionItem = (tx) => {
     day: "numeric",
   });
 
-  const translatedCategory = i18nData[tx.category.toLowerCase()] || tx.category;
   const safeTitle = escapeHTML(tx.title);
-
+  const translatedCategory = i18nData[tx.category.toLowerCase()] || tx.category;
   return `
     <div class="transaction">
       <div>
