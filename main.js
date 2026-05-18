@@ -270,45 +270,6 @@ const closeConfirmModal = () => {
 };
 
 // Focus Trap
-const handleModalTab = (e) => {
-  if (e.key !== "Tab") return;
-
-  const focusableElements = [dom.cancelDeleteBtn, dom.confirmDeleteBtn];
-  const firstElement = focusableElements[0];
-  const lastElement = focusableElements[focusableElements.length - 1];
-
-  if (e.shiftKey) {
-    if (document.activeElement === firstElement) {
-      lastElement.focus();
-      e.preventDefault(); 
-    }
-  } 
-  else {
-    if (document.activeElement === lastElement) {
-      firstElement.focus();
-      e.preventDefault();
-    }
-  }
-};
-
-// prev version
-// const renderSummary = () => {
-//   const amounts = state.transactions.map((tx) => tx.amount);
-
-//   const totalIncome = amounts
-//     .filter((amount) => amount > 0)
-//     .reduce((sum, amount) => sum + amount, 0);
-
-//   const totalExpenses = amounts
-//     .filter((amount) => amount < 0)
-//     .reduce((sum, amount) => sum + amount, 0);
-
-//   const totalBalance = totalIncome + totalExpenses;
-
-//   dom.totalIncome.textContent = formatCurrency(totalIncome);
-//   dom.totalExpenses.textContent = formatCurrency(Math.abs(totalExpenses));
-//   dom.totalBalance.textContent = formatCurrency(totalBalance);
-// };
 
 
 // revise version
