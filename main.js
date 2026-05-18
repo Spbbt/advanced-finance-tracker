@@ -277,25 +277,6 @@ const handleModalTab = (e) => {
 };
 
 
-// revise version
-const renderSummary = () => {
-  // Convert monetary amounts into integers denominated in "cents" for calculation to avoid IEEE 754 floating-point precision issues.
-  const toCents = (num) => Math.round(num * 100);
-  
-  const totalIncomeCents = state.transactions
-    .filter((tx) => tx.amount > 0)
-    .reduce((sum, tx) => sum + toCents(tx.amount), 0);
-
-  const totalExpensesCents = state.transactions
-    .filter((tx) => tx.amount < 0)
-    .reduce((sum, tx) => sum + Math.abs(toCents(tx.amount)), 0);
-
-  const balanceCents = totalIncomeCents - totalExpensesCents;
-
-  dom.totalIncome.textContent = formatCurrency(totalIncomeCents / 100);
-  dom.totalExpenses.textContent = formatCurrency(totalExpensesCents / 100);
-  dom.totalBalance.textContent = formatCurrency(balanceCents / 100);
-};
 
 // const renderTransactions = () => {
 //   const filtered = filterTransactions();
