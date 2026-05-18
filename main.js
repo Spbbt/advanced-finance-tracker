@@ -234,23 +234,11 @@ const deleteTransaction = (id) => {
   }
 };
 
-// const openConfirmModal = (id) => {
-//   state.pendingDeleteId = id;
-//   dom.confirmModal.classList.add("is-open");
-//   dom.confirmModal.setAttribute("aria-hidden", "false");
-// };
 
-// const closeConfirmModal = () => {
-//   state.pendingDeleteId = null;
-//   dom.confirmModal.classList.remove("is-open");
-//   dom.confirmModal.setAttribute("aria-hidden", "true");
-// };
 
-// new version
 const openConfirmModal = (id) => {
   state.pendingDeleteId = id;
   previouslyFocusedElement = document.activeElement;
-
   dom.confirmModal.classList.add("is-open");
   dom.confirmModal.setAttribute("aria-hidden", "false");
   setTimeout(() => {
@@ -269,7 +257,24 @@ const closeConfirmModal = () => {
   }
 };
 
-// Focus Trap
+const handleModalTab = (e) => {
+  if (e.key !== "Tab") return;
+  const focusableElements = [dom.cancelDeleteBtn, dom.confirmDeleteBtn];
+  const firstElement = focusableElements[0];
+  const lastElement = focusableElements[focusableElements.length - 1];
+  if (e.shiftKey) {
+    if (document.activeElement === firstElement) {
+      lastElement.focus();
+      e.preventDefault(); 
+    }
+  } 
+  else {
+    if (document.activeElement === lastElement) {
+      firstElement.focus();
+      e.preventDefault();
+    }
+  }
+};
 
 
 // revise version
